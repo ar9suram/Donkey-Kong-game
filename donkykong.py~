@@ -1,0 +1,227 @@
+import pygame, sys
+import time
+import random
+
+pygame.init()
+
+
+display_width = 800
+display_height = 300
+display = pygame.display.set_mode((display_width,display_height))
+pygame.display.set_caption('layout')
+
+white = (255,255,255)
+black = (0,0,0)
+red = (255,0,0)
+green = (0,155,0)
+purple = (255,0,255)
+coin = (100,100,0)
+
+clock = pygame.time.Clock()
+block_size = 10
+FPS = 30
+
+levels = []
+ladders = []
+
+#class layout():
+
+    #def level(self):
+        
+        #for ele in [1,2,3,4,5]:
+            #self.ran_start = round(random.randrange(block_size,display_width/2-block_size)/10.0)*10.0
+            #self.ran_width=round(random.randrange(display_width/2+block_size,display_width)/10.0)*10.0
+            #levels.append(self.ran_start)
+            #levels.append(self.ran_width)
+        #levels=[260,540,0,490,300,500,0,410,210,590]
+    #def ladder(self):
+        #for ele in [1,2,3,4,5]:
+           # self.a = max(levels[2*(ele-1)], levels[2*(ele)])
+           # self.b = min(levels[2*(ele-1)+1]+levels[2*(ele-1)], levels[2*ele+1]+levels[2*(ele)])
+           # self.ran_point=round(random.randrange(self.a,self.b)/10.0)*10.0
+           # ladders.append(self.ran_point)
+        #self.ran_point=round(random.randrange(levels[2*(5-1)],levels[2*(5-1)+1]+levels[2*(5-1)])/10.0)*10.0
+        #ladders.append(self.ran_point)
+       
+           
+class person():
+
+    def get_position(self):
+
+        pygame.draw.rect(display, green, [2*block_size,28*block_size,block_size,block_size])
+
+    #def update_(self):
+        
+    
+P=person()
+#L=layout()
+#L.level()
+#L.ladder()
+P.get_position()
+levels=[260,540,0,490,300,500,0,410,210,590]
+ladders=[400,150,150,360,640]
+lead_x_change = 0
+filename1 = 'person.png'
+filename2 = 'coin.png'
+
+def mainloop():
+    gameover = False
+    gameexit = False
+    lead_x = 20
+    lead_y = 270
+    lead_x_change =0
+    collect1 = 0
+    collect2 = 0
+    collect3 = 0
+    collect4 = 0
+    collect5 = 0
+    collect6 = 0
+    collect7 = 0
+    collect8 = 0
+    collect9 = 0
+    collect10 = 0
+    collect11 = 0
+    while not gameexit:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                gameexit = True
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_RIGHT:
+                        lead_x_change = 10
+                if event.key == pygame.K_LEFT:
+                    
+                        lead_x_change = -10
+                if event.key == pygame.K_UP:
+                    if lead_x == 640 and lead_y == 270:
+                        lead_y = 220
+                    if lead_x == 360 and lead_y == 220:
+                        lead_y = 170
+                    if lead_x == 150 and lead_y == 170:
+                        lead_y = 70
+                    if lead_x == 400 and lead_y == 70:
+                        lead_y = 20
+                if event.key == pygame.K_DOWN:
+                    if lead_x == 640 and lead_y == 220:
+                        lead_y = 270
+                    if lead_x == 360 and lead_y == 170:
+                        lead_y = 220
+                    if lead_x == 150 and lead_y == 70:
+                        lead_y = 170
+                    if lead_x == 400 and lead_y == 20:
+                        lead_y = 70
+                    if lead_x == 710 and lead_y == 120:
+                        lead_y = 220
+                if lead_y == 30 and  lead_x < 270:
+                    lead_y = 80
+                if lead_y == 80 and lead_x > 460:
+                    lead_y = 130
+                if lead_y == 130 and lead_x < 310:
+                    lead_Y = 180
+                if lead_y == 180 and lead_x > 400:
+                    lead_y = 230
+                if lead_y == 230 and lead_x < 200:
+                    lead_y = 280
+            if event.type == pygame.KEYUP:
+                if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
+                    lead_x_change = 0
+        lead_x += lead_x_change
+        print lead_x
+        print lead_y
+        ################# coin collection ######################
+        if lead_x == 750 and lead_y == 270:
+            collect1 = 1 
+        if lead_x == 390 and lead_y == 270:
+            collect2 = 1
+        if lead_x == 220 and lead_y == 220:
+            collect3 = 1
+        if lead_x == 770 and lead_y == 220:
+            collect4 = 1
+        if lead_x == 400 and lead_y == 170:
+            collect5 = 1
+        if lead_x == 50 and lead_y == 170:
+            collect6 = 1
+        if lead_x == 320 and lead_y == 120:
+            collect7 = 1
+        if lead_x == 720 and lead_y == 120:
+            collect8 = 1
+        if lead_x == 470 and lead_y == 70:
+            collect9 = 1
+        if lead_x == 90 and lead_y == 70:
+            collect10 = 1
+        if lead_x == 600 and lead_y == 20:
+            collect11 = 1
+        ##########################################################
+        while gameover:
+            display.fill(white)
+            message_to_screen("Game Over, click A to play again or Q to quit",green)
+            pygame.display.update()
+
+            for event in pygame.event.get():
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_Q:
+                        gameexit = True
+                        gameover = False
+                    if event.key == pygame.K_R:
+                        P.get_position()
+                        mainloop()
+       
+        display.fill(white)
+        pygame.draw.rect(display, black, [0,0,display_width,block_size])
+        pygame.draw.rect(display, black, [0,0,block_size,display_height])
+        for i in [1,2,3,4,5]:
+            pygame.draw.rect(display, black, [levels[2*(i-1)],block_size+(i)*3*block_size+(i-1)*2*block_size,levels[2*(i-1)+1],block_size])
+            ladder=pygame.image.load(filename3)
+	    display.blit(ladder,(ladders[i-1],block_size+(i)*3*block_size+(i-1)*2*block_size))
+	    #pygame.draw.rect(display, red, [ladders[i-1],block_size+(i)*3*block_size+(i-1)*2*block_size,block_size,5*block_size])
+        pygame.draw.rect(display, black, [0,display_height-block_size,display_width,block_size])
+        pygame.draw.rect(display, black, [display_width-block_size,0,block_size,display_height])
+        pygame.draw.rect(display, red, [710,14*10,block_size,6*block_size])
+        pygame.draw.rect(display, red, [710,22*10,block_size,2*block_size])
+        #pygame.draw.rect(display, green, [lead_x,lead_y,block_size,block_size])
+	img=pygame.image.load(filename1)
+	coin=pygame.image.load(filename2)
+	display.blit(img,(lead_x,lead_y))
+        pygame.draw.rect(display, purple, [77*10,20,block_size,block_size])
+        ################################### coins ##############################
+        if collect1 == 0:
+            display.blit(coin,(750,270))
+        if collect2 == 0:
+	    display.blit(coin,(390,270))
+            #display.blit(display, coin, [390,280,block_size,block_size])
+        if collect3 == 0:
+            
+	    display.blit(coin,(220,220))
+        if collect4 == 0:
+            #pygame.draw.rect(display, coin, [770,230,block_size,block_size])
+            display.blit(coin,(770,220))
+        if collect5 == 0:
+            display.blit(coin,(400,170))
+	    #pygame.draw.rect(display, coin, [400,180,block_size,block_size])
+        if collect6 == 0:
+            display.blit(coin,(50,170))
+	    #pygame.draw.rect(display, coin, [50,180,block_size,block_size])
+        if collect7 == 0:
+	    display.blit(coin,(320,120))
+            #pygame.draw.rect(display, coin, [320,130,block_size,block_size])
+        if collect8 == 0:
+	    display.blit(coin,(720,120))
+            #pygame.draw.rect(display, coin, [720,130,block_size,block_size])
+        if collect9 == 0:
+	    display.blit(coin,(470,70))
+            #pygame.draw.rect(display, coin, [470,80,block_size,block_size])
+        if collect10 == 0:
+	    display.blit(coin,(90,70))
+            #pygame.draw.rect(display, coin, [90,80,block_size,block_size])
+        if collect11 == 0:
+            display.blit(coin,(600,20))
+	    #pygame.draw.rect(display, coin, [600,30,block_size,block_size])
+        ##############################################################################
+        pygame.display.update()
+        clock.tick(FPS)
+    pygame.quit()
+    quit()
+mainloop()
+
+            
+                        
+                        
